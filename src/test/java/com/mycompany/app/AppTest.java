@@ -35,14 +35,27 @@ public class AppTest
     {
         assertTrue( true );
     }
-    /*
+    
     public void testResult(){
     	ArrayList<Integer> array1 = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8));
 	ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(3,3,4,5,6,7,8,9,10));
 
 	assertTrue(new App().myMethod(array1,array2, 5,4) );
-    }*/
+    }
+    public void testEmptyArray() {
+      ArrayList<Integer> array = new ArrayList<>();
+      assertFalse(new App().myMethod(array,array,1, 1));
+    }
+    public void testNull() {
+      assertFalse(new App().myMethod(null,null,1,1));
+    }
+    public void testFound(){
+	ArrayList<Integer>array1 = new ArrayList<>(Arrays.asList(1,2,3,4));
+        ArrayList<Integer>array2 = new ArrayList<>(Arrays.asList(1,2,3,4));
 
+	assertTrue(new App().myMethod(array1,array2,3,3));
+    }
+  
 
 
 }

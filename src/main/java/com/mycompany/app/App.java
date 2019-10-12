@@ -6,9 +6,22 @@ import java.util.*;
  */
 public class App 
 {
+   
    public static boolean myMethod(ArrayList<Integer> a1, ArrayList<Integer> a2, int i1, int i2)
-// this method check the sum of first i1 elements in array a1 and compare to sum of i2 elements in array a2, if the sum will be equal then it returns true;
+/* this method check the sum of first i1 elements in array a1 and compare to sum of i2 elements in array a2, if the sum will be equal then it returns true*/
    {
+	if(a1 == null)
+	return false;
+	
+	if(a2 == null)
+	return false;
+
+	if(a1.size() == 0)
+	return false;
+
+	if(a2.size() == 0)
+	return false;
+
 	int tempSum1 = 0;
 	int tempSum2 = 0;
 
