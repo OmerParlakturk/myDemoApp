@@ -12,30 +12,7 @@ import spark.ModelAndView;
 import spark.template.mustache.MustacheTemplateEngine;
 public class App 
 {
-/* from my older project but i also added new method */
-   public static int sumOfValues = 0;
 
-   public static String sumOfString = "(";
-
-    public static boolean search(ArrayList<Integer> array, int e) {
-      System.out.println("inside search");
-      if (array == null) return false;
-
-      for (int i=0; i<array.size(); i++) {
-         sumOfString += array.get(i) + "+";
-         sumOfValues += array.get(i);
-      }
-       sumOfString = sumOfString.substring(0,sumOfString.length()-1);
-
-      if (sumOfValues == e){
-        sumOfString += ") = " + e;
-        return true;
-
-      }else{
-        sumOfString += ") != " + e;
-      return false;
-      }
-    }
    public static boolean myMethod(ArrayList<Integer> a1, ArrayList<Integer> a2, int i1, int i2)
 /* this method check the sum of first i1 elements in array a1 and compare to sum of i2 elements in array a2, if the sum will be equal then it returns true*/
    {
@@ -67,56 +44,47 @@ public class App
    public static void main(String[] args) {
         port(getHerokuAssignedPort());
 
-        get("/", (req, res) -> "If the sum of integers which are in the first, second and third box, is equal to the value which is in the right (the fourth) box, then the program will show ... = ... (equal), otherwise program will show ... != ... (not equal)");
+        get("/", (req, res) -> "This method check the sum of first i1 elements in array a1 and compare to sum of i2 elements in array a2, if the sum will be equal then it returns true");
 
         post("/compute", (req, res) -> {
 
-          //System.out.println(req.queryParams("input1"));
-          //System.out.println(req.queryParams("input2"));
-          //System.out.println(req.queryParams("input3"));
-          //System.out.println(req.queryParams("input4"));
-
+////...	
           String input1 = req.queryParams("input1");
-          String input2 = req.queryParams("input2");
-          String input3 = req.queryParams("input3");
-
-          java.util.Scanner sc1 = new java.util.Scanner(input1);
-          java.util.Scanner sc2 = new java.util.Scanner(input2);
-          java.util.Scanner sc3 = new java.util.Scanner(input3);
-
-          sc1.useDelimiter("[;\r\n]+");
-          sc2.useDelimiter("[;\r\n]+");
-          sc3.useDelimiter("[;\r\n]+");
-
-          java.util.ArrayList<Integer> inputList = new java.util.ArrayList<>();
-          while (sc1.hasNext())
+	  java.util.Scanner sc1 = new java.util.Scanner(input1);
+	  sc1.useDelimiter("[;\r\n]+");
+          java.util.ArrayList<Integer> a1 = new java.util.ArrayList<>();
+	  
+	  while (sc1.hasNext())
           {
             int value = Integer.parseInt(sc1.next().replaceAll("\\s",""));
-            inputList.add(value);
+            a1.add(value);
           }
-           while (sc2.hasNext())
+	  System.out.println(a1);
+
+	  String input2 = req.queryParams("input2");
+	  java.util.Scanner sc2 = new java.util.Scanner(input2);
+	  sc2.useDelimiter("[;\r\n]+");
+          java.util.ArrayList<Integer> a2 = new java.util.ArrayList<>();
+	  
+	  while (sc2.hasNext())
           {
-            int value2 = Integer.parseInt(sc2.next().replaceAll("\\s",""));
-            inputList.add(value2);
+            int value = Integer.parseInt(sc2.next().replaceAll("\\s",""));
+            a2.add(value);
           }
-           while (sc3.hasNext())
-          {
-            int value3 = Integer.parseInt(sc3.next().replaceAll("\\s",""));
-            inputList.add(value3);
-          }
+	  System.out.println(a2);
 
-          System.out.println(inputList);
+          String input3 = req.queryParams("input3").replaceAll("\\s","");
+	  int i1 = Integer.parseInt(input3);
 
+	  String input4 = req.queryParams("input4").replaceAll("\\s","");
+	  int i2 = Integer.parseInt(input4);
 
-          String input4 = req.queryParams("input4").replaceAll("\\s","");
-          int input4AsInt = Integer.parseInt(input4);
+	  boolean result = App.myMethod(a1,a2,i1,i2);
 
-          boolean result = App.search(inputList, input4AsInt);
+////...
 
          Map map = new HashMap();
-          map.put("result", sumOfString);
-          sumOfValues = 0;
-          sumOfString = "(";
+          map.put("result", result);        
           return new ModelAndView(map, "compute.mustache");
         }, new MustacheTemplateEngine());
 
